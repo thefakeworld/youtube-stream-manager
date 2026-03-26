@@ -1,0 +1,23 @@
+{
+  "status": "idle",
+  "currentVideoIndex": 0,
+  "currentLoop": 10,
+  "queue": [
+    {
+      "id": "cmn6vxe980002nki7dwufomzv",
+      "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+      "title": "Unified Streaming - 体育赛事 (2026年3月26日)"
+    },
+    {
+      "id": "cmn6vxe9d0003nki7lt6sowah",
+      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+      "title": "自然纪录片 - 海洋世界 (2026年3月26日)"
+    }
+  ],
+  "rtmpUrl": "rtmp://a.rtmp.youtube.com/live/hdb0-bxcg-ua45-hg30-78r0",
+  "loopCount": 10,
+  "error": null,
+  "startedAt": "2026-03-26T03:31:11.368Z",
+  "currentPid": null,
+  "sessionId": "mn6vxkp3albwphdl0"
+}

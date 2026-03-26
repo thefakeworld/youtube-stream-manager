@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 推流配置
+model StreamConfig {
+  id                String   @id @default(cuid())
+  name              String   // 配置名称
+  rtmpUrl           String   // RTMP推流地址
+  streamKey         String?  // 推流密钥
+  platform          String   // 平台名称 (bilibili, douyin, huya 等)
+  isActive          Boolean  @default(false)
+  autoStart         Boolean  @default(true)  // 自动开始
+  loopCount         Int      @default(10)    // 循环播放视频数量
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  videos            Video[]
+  streamTasks       StreamTask[]
+}
+
+// 视频信息
+model Video {
+  id                String   @id @default(cuid())
+  youtubeId         String   @unique  // YouTube视频ID
+  title             String
+  description       String?
+  thumbnailUrl      String?
+  duration          Int?     // 时长(秒)
+  viewCount         Int?
+  channelTitle      String?
+  streamUrl         String?  // 获取到的直播流地址
+  status            String   @default("pending")  // pending, ready, streaming, error
+  priority          Int      @default(0)  // 播放优先级
+  lastStreamedAt    DateTime?
+  streamCount       Int      @default(0)  // 已推流次数
+  errorMessage      String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  streamConfigId    String?
+  streamConfig      StreamConfig? @relation(fields: [streamConfigId], references: [id])
+  currentInTasks    StreamTask[]  // 作为当前播放视频的任务
+  logs              StreamLog[]   // 相关日志
+}
+
+// 推流任务
+model StreamTask {
+  id                String   @id @default(cuid())
+  streamConfigId    String
+  streamConfig      StreamConfig @relation(fields: [streamConfigId], references: [id])
+  status            String   @default("idle")  // idle, running, paused, stopped, error
+  currentVideoId    String?
+  currentVideo      Video?   @relation(fields: [currentVideoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  currentIndex      Int      @default(0)  // 当前播放索引
+  loopIteration     Int      @default(0)  // 当前循环次数
+  startedAt         DateTime?
+  stoppedAt         DateTime?
+  errorMessage      String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+// 推流日志
+model StreamLog {
+  id                String   @id @default(cuid())
+  videoId           String?
+  video             Video?   @relation(fields: [videoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  action            String   // start, stop, error, complete
+  message           String?
+  createdAt         DateTime @default(now())
+}

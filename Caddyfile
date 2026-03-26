@@ -1,0 +1,12 @@
+:81 {
+	# Socket.io requests with XTransformPort
+	@api query XTransformPort=*
+	handle @api {
+		reverse_proxy localhost:{query.XTransformPort}
+	}
+
+	# Default: proxy to Next.js
+	handle {
+		reverse_proxy localhost:3000
+	}
+}

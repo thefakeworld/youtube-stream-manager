@@ -1,0 +1,17 @@
+{
+  "name": "stream-service",
+  "version": "1.0.0",
+  "description": "FFmpeg streaming service for YouTube-to-RTMP auto-streaming",
+  "main": "index.ts",
+  "scripts": {
+    "start": "bun run index.ts",
+    "dev": "bun --watch run index.ts"
+  },
+  "dependencies": {
+    "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "bun-types": "^1.3.4"
+  }
+}
