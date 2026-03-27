@@ -47,5 +47,16 @@ test
 prompt
 
 server.log
+
 # Skills directory
 /skills/
+
+# Project specific
+/cookies/
+/db/
+/download/
+/upload/
+/mini-services/
+.stream-state.json
+*.db
+*.db-journal
