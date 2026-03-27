@@ -338,6 +338,11 @@ export default function YouTubeStreamDashboard() {
   const [cookiesInfo, setCookiesInfo] = useState<{hasCookies: boolean; cookieCount?: number} | null>(null)
   const [isUploadingCookies, setIsUploadingCookies] = useState(false)
   const [showCookiesHelp, setShowCookiesHelp] = useState(false)
+  const [channelUrl, setChannelUrl] = useState('')
+  const [channelVideos, setChannelVideos] = useState<FetchedVideo[]>([])
+  const [isFetchingChannel, setIsFetchingChannel] = useState(false)
+  const [selectedChannelVideos, setSelectedChannelVideos] = useState<Set<string>>(new Set())
+  const [isChannelDialogOpen, setIsChannelDialogOpen] = useState(false)
 
   const logContainerRef = useRef<HTMLDivElement>(null)
   const statusIntervalRef = useRef<NodeJS.Timeout | null>(null)
@@ -923,6 +928,111 @@ export default function YouTubeStreamDashboard() {
     }
   }
 
+  // Fetch channel videos
+  const handleFetchChannel = async () => {
+    if (!channelUrl.trim()) {
+      addLog('warning', '请输入频道URL')
+      return
+    }
+
+    setIsFetchingChannel(true)
+    addLog('info', '正在获取频道视频...')
+
+    try {
+      const response = await fetch('/api/videos/fetch-channel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: channelUrl, maxVideos: 50 }),
+      })
+      const result = await response.json()
+
+      if (result.success && result.data) {
+        const videos: FetchedVideo[] = result.data.map((v: { id: string; title: string; thumbnail: string; duration: number; url: string }) => ({
+          id: v.id,
+          title: v.title,
+          thumbnail: v.thumbnail || `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`,
+          duration: formatDuration(v.duration),
+          url: v.url,
+        }))
+        setChannelVideos(videos)
+        setSelectedChannelVideos(new Set())
+        setIsChannelDialogOpen(true)
+        addLog('success', `获取到 ${videos.length} 个频道视频`)
+      } else {
+        addLog('error', result.error || '获取频道视频失败')
+        if (result.needCookies) {
+          setShowCookiesHelp(true)
+        }
+      }
+    } catch {
+      addLog('error', '获取频道视频失败')
+    } finally {
+      setIsFetchingChannel(false)
+    }
+  }
+
+  const handleSelectChannelVideo = (id: string, checked: boolean) => {
+    setSelectedChannelVideos(prev => {
+      const next = new Set(prev)
+      if (checked) {
+        next.add(id)
+      } else {
+        next.delete(id)
+      }
+      return next
+    })
+  }
+
+  const handleSelectAllChannelVideos = () => {
+    if (selectedChannelVideos.size === channelVideos.length) {
+      setSelectedChannelVideos(new Set())
+    } else {
+      setSelectedChannelVideos(new Set(channelVideos.map(v => v.id)))
+    }
+  }
+
+  const handleAddChannelVideos = async () => {
+    const videosToAdd = channelVideos.filter(v => selectedChannelVideos.has(v.id))
+    if (videosToAdd.length === 0) {
+      addLog('warning', '请先选择要添加的视频')
+      return
+    }
+
+    try {
+      // Parse each video URL to get stream URL
+      addLog('info', `正在解析 ${videosToAdd.length} 个视频...`)
+      
+      const response = await fetch('/api/videos/batch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          videos: videosToAdd.map(v => ({
+            youtubeId: v.id,
+            title: v.title,
+            thumbnailUrl: v.thumbnail,
+            streamUrl: v.url  // YouTube URL, will need to be parsed when playing
+          }))
+        })
+      })
+      const result = await response.json()
+      if (result.success) {
+        addLog('success', `已添加 ${result.added} 个视频`)
+        if (result.skipped > 0) {
+          addLog('warning', `${result.skipped} 个视频已存在，已跳过`)
+        }
+        loadVideos()
+        setIsChannelDialogOpen(false)
+        setSelectedChannelVideos(new Set())
+        setChannelVideos([])
+        setChannelUrl('')
+      } else {
+        addLog('error', result.error || '添加失败')
+      }
+    } catch {
+      addLog('error', '添加视频失败')
+    }
+  }
+
   // Get log icon
   const getLogIcon = (type: LogType) => {
     const icons = {
@@ -1260,6 +1370,104 @@ export default function YouTubeStreamDashboard() {
                               </Button>
                             </div>
                           </div>
+
+                          {/* Fetch Channel Videos */}
+                          <div className="space-y-2 p-4 border rounded-lg bg-purple-50 dark:bg-purple-950/20 border-purple-200 dark:border-purple-800">
+                            <Label className="text-sm font-medium flex items-center gap-2">
+                              <Youtube className="w-4 h-4" />
+                              获取YouTube频道视频
+                            </Label>
+                            <div className="flex gap-2">
+                              <Input 
+                                placeholder="https://www.youtube.com/@频道名/videos" 
+                                value={channelUrl}
+                                onChange={(e) => setChannelUrl(e.target.value)}
+                                className="flex-1"
+                              />
+                              <Button 
+                                onClick={handleFetchChannel}
+                                disabled={isFetchingChannel || !cookiesInfo?.hasCookies}
+                              >
+                                {isFetchingChannel ? (
+                                  <><RefreshCw className="w-4 h-4 mr-2 animate-spin" />获取中...</>
+                                ) : (
+                                  <><Search className="w-4 h-4 mr-2" />获取</>
+                                )}
+                              </Button>
+                            </div>
+                            {!cookiesInfo?.hasCookies && (
+                              <p className="text-xs text-amber-600">需要先配置YouTube Cookies</p>
+                            )}
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+
+                    {/* Channel Videos Dialog */}
+                    <Dialog open={isChannelDialogOpen} onOpenChange={setIsChannelDialogOpen}>
+                      <DialogContent className="max-w-4xl max-h-[85vh]">
+                        <DialogHeader>
+                          <DialogTitle className="flex items-center gap-2">
+                            <Youtube className="w-5 h-5" />
+                            频道视频 ({channelVideos.length})
+                          </DialogTitle>
+                          <DialogDescription>
+                            选择要添加的视频到队列
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-3">
+                          {/* Select controls */}
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <Checkbox
+                                checked={selectedChannelVideos.size === channelVideos.length && channelVideos.length > 0}
+                                onCheckedChange={handleSelectAllChannelVideos}
+                              />
+                              <Label className="text-sm">全选 ({selectedChannelVideos.size}/{channelVideos.length})</Label>
+                            </div>
+                            <Button 
+                              onClick={handleAddChannelVideos}
+                              disabled={selectedChannelVideos.size === 0}
+                              size="sm"
+                            >
+                              <Plus className="w-4 h-4 mr-2" />
+                              添加选中 ({selectedChannelVideos.size})
+                            </Button>
+                          </div>
+                          
+                          {/* Video list */}
+                          <ScrollArea className="h-[60vh]">
+                            <div className="space-y-2 pr-4">
+                              {channelVideos.map((video) => (
+                                <div 
+                                  key={video.id}
+                                  className={cn(
+                                    "flex items-start gap-3 p-3 rounded-lg border transition-all cursor-pointer hover:bg-muted/50",
+                                    selectedChannelVideos.has(video.id) && "bg-purple-50 dark:bg-purple-950/30 border-purple-300"
+                                  )}
+                                  onClick={() => handleSelectChannelVideo(video.id, !selectedChannelVideos.has(video.id))}
+                                >
+                                  <Checkbox
+                                    checked={selectedChannelVideos.has(video.id)}
+                                    onCheckedChange={(checked) => handleSelectChannelVideo(video.id, checked as boolean)}
+                                    className="mt-1"
+                                  />
+                                  <img 
+                                    src={video.thumbnail} 
+                                    alt={video.title}
+                                    className="w-24 h-14 object-cover rounded shrink-0"
+                                  />
+                                  <div className="flex-1 min-w-0">
+                                    <h4 className="font-medium text-sm line-clamp-2">{video.title}</h4>
+                                    <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
+                                      <Clock className="w-3 h-3" />
+                                      <span>{video.duration}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </ScrollArea>
                         </div>
                       </DialogContent>
                     </Dialog>
