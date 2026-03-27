@@ -202,9 +202,10 @@ function SortableVideoItem({
         !isPlaying && video.status === 'pending' && 'hover:border-gray-300'
       )}
     >
-      <div className="flex items-center gap-2 sm:gap-3">
-        {/* Drag Handle */}
-        <div className="flex items-center gap-1 sm:gap-2 text-muted-foreground shrink-0">
+      {/* First row: thumbnail, title, duration */}
+      <div className="flex items-start gap-2 sm:gap-3">
+        {/* Drag Handle + Index */}
+        <div className="flex items-center gap-1 sm:gap-2 text-muted-foreground shrink-0 pt-0.5">
           <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing">
             <GripVertical className="w-4 h-4 hidden sm:block hover:text-foreground" />
           </div>
@@ -231,51 +232,51 @@ function SortableVideoItem({
           )}
         </div>
 
-        {/* Info */}
-        <div className="flex-1 min-w-0 overflow-hidden">
+        {/* Info - Title and Duration */}
+        <div className="flex-1 min-w-0">
           <h4 className={cn(
-            "font-medium text-sm truncate",
+            "font-medium text-sm line-clamp-2",
             isPlaying && "text-green-700 dark:text-green-400 font-semibold"
           )}>{displayTitle}</h4>
-          
-          {/* Mini Player - only show when playing */}
-          {isPlaying && video.duration ? (
-            <div className="mt-2 space-y-1.5">
-              {/* Progress bar */}
-              <div className="relative h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                <div 
-                  className="absolute inset-y-0 left-0 bg-green-500 rounded-full transition-all duration-1000"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-              {/* Time display */}
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span className="font-mono text-green-600">{formatDuration(runningTime)}</span>
-                <span className="font-mono">{formatDuration(video.duration)}</span>
-              </div>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-xs text-muted-foreground">{formatDuration(video.duration)}</span>
-            </div>
-          )}
+          <span className="text-xs text-muted-foreground mt-0.5 block">
+            {formatDuration(video.duration)}
+          </span>
         </div>
+      </div>
 
-        {/* Actions */}
+      {/* Second row: progress bar (when playing) and action buttons */}
+      <div className="mt-2 flex items-center gap-2 pl-8 sm:pl-10">
+        {/* Mini Player Progress - only show when playing */}
+        {isPlaying && video.duration ? (
+          <div className="flex-1 min-w-0">
+            <div className="relative h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div 
+                className="absolute inset-y-0 left-0 bg-green-500 rounded-full transition-all duration-1000"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <div className="flex items-center justify-between text-xs text-muted-foreground mt-1">
+              <span className="font-mono text-green-600">{formatDuration(runningTime)}</span>
+              <span className="font-mono">{formatDuration(video.duration)}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="flex-1" />
+        )}
+        
+        {/* Action Buttons - always visible */}
         <div className="flex items-center gap-1 shrink-0">
           {isPlaying ? (
-            <>
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 px-3 border-orange-300 text-orange-600 hover:bg-orange-50 hover:text-orange-700"
-                onClick={onPause}
-                title="暂停推流"
-              >
-                <Pause className="w-4 h-4 mr-1" />
-                暂停
-              </Button>
-            </>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 px-3 border-orange-300 text-orange-600 hover:bg-orange-50 hover:text-orange-700"
+              onClick={onPause}
+              title="暂停推流"
+            >
+              <Pause className="w-4 h-4 mr-1" />
+              暂停
+            </Button>
           ) : (
             <Button
               variant="outline"

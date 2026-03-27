@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { spawn } from "child_process";
 import { execSync } from "child_process";
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 
 interface VideoInfo {
@@ -20,15 +20,16 @@ const COOKIES_FILE = join(COOKIES_DIR, 'youtube_cookies.txt');
 // Find yt-dlp executable
 function findYtDlp(): string {
   const paths = [
+    '/usr/local/bin/yt-dlp',  // Primary location (downloaded binary)
     '/home/z/.local/bin/yt-dlp',
     'yt-dlp',
-    '/usr/local/bin/yt-dlp',
     '/usr/bin/yt-dlp'
   ];
   
   for (const path of paths) {
     try {
       execSync(`${path} --version 2>/dev/null`);
+      console.log('[VideoParser] Found yt-dlp at:', path);
       return path;
     } catch {
       continue;
@@ -59,6 +60,7 @@ function hasValidCookies(): boolean {
 async function extractVideoInfo(url: string, useCookies: boolean = true): Promise<VideoInfo | null> {
   return new Promise((resolve) => {
     const args = [
+      '--js-runtimes', 'node',  // Use Node.js for YouTube signature solving
       '--print', '%(id)s\n%(title)s\n%(thumbnail)s\n%(duration)s',
       '--get-url',
       '-f', 'best[ext=mp4][vcodec!=none]/best[vcodec!=none]/best',
@@ -302,6 +304,12 @@ export async function PUT(request: NextRequest) {
 
     // Check for YouTube cookies
     const hasYouTubeCookies = content.includes('youtube.com') || content.includes('.youtube');
+    
+    // Ensure cookies directory exists
+    if (!existsSync(COOKIES_DIR)) {
+      mkdirSync(COOKIES_DIR, { recursive: true });
+      console.log('[Cookies] Created directory:', COOKIES_DIR);
+    }
     
     // Save cookies file
     writeFileSync(COOKIES_FILE, content, 'utf-8');

@@ -1,23 +1,33 @@
 {
-  "status": "idle",
+  "status": "streaming",
   "currentVideoIndex": 0,
-  "currentLoop": 10,
+  "currentLoop": 0,
   "queue": [
     {
-      "id": "cmn6vxe980002nki7dwufomzv",
-      "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
-      "title": "Unified Streaming - 体育赛事 (2026年3月26日)"
+      "id": "cmn885yuf0001pli71tm8s4fl",
+      "url": "https://manifest.googlevideo.com/api/manifest/hls_playlist/expire/1774596646/ei/xd3FaeOlPNXh0-kPnI6f8Ao/ip/8.218.50.250/id/87ecf01f797625e7/itag/96/source/youtube/requiressl/yes/ratebypass/yes/pfa/1/sgoap/clen%3D63229222%3Bdur%3D3906.873%3Bgir%3Dyes%3Bitag%3D140%3Blmt%3D1754488583448176/sgovp/clen%3D1941836908%3Bdur%3D3906.802%3Bgir%3Dyes%3Bitag%3D137%3Blmt%3D1754492965435074/rqh/1/hls_chunk_host/rr2---sn-i3b7knsd.googlevideo.com/xpc/EgVo2aDSNQ%3D%3D/cps/292/met/1774575045,/mh/oA/mm/31,26/mn/sn-i3b7knsd,sn-un57enel/ms/au,onr/mv/m/mvi/2/pl/17/rms/au,au/initcwndbps/395000/siu/1/bui/AUUZDGK9dRmknZaq66hUpA8n-xUe7TAV-bJ-b8RJH0Hz-PxTYTdesdXOMMf8m8QRrfbZ-s7DeA/spc/jlWavbrlRmcNtlFBm-HvlWqwGyutNdcPMro7lI9spfmmtMtGAjl41X_qKh9XI86itVEbNSn2eg/vprv/1/ns/ZZTa21GR_Lnl5srRYYi1bEwT/playlist_type/CLEAN/dover/11/txp/5432534/mt/1774574489/fvip/3/keepalive/yes/fexp/51565115,51565681,51791334/n/j4pjc9CtZCx9iA/sparams/expire,ei,ip,id,itag,source,requiressl,ratebypass,pfa,sgoap,sgovp,rqh,xpc,siu,bui,spc,vprv,ns,playlist_type/sig/AHEqNM4wRQIhAN3X_qPR8HGKDKw6xYPUseN--MQQt01UHJl-MUADL_yuAiAah9Dg27ZU6DG-NoghgKcf4gypo5iAqL-L8J7-l7Ca9Q%3D%3D/lsparams/hls_chunk_host,cps,met,mh,mm,mn,ms,mv,mvi,pl,rms,initcwndbps/lsig/APaTxxMwRQIhAPp-kpTl_mD25KAZMnBcMI7nhaeNkttCeegx-QLeJmhIAiBzh7xodrj2aF2xAgS3f1mRT3CZE2VLKUbAJVyZ4k7FeQ%3D%3D/playlist/index.m3u8",
+      "title": "1 Hour | Alan Walker - Faded (Dj阿森 FunkyHouse Remix 2025)"
     },
     {
-      "id": "cmn6vxe9d0003nki7lt6sowah",
-      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
-      "title": "自然纪录片 - 海洋世界 (2026年3月26日)"
+      "id": "cmn886rdr0002pli7rvvrnfem",
+      "url": "https://manifest.googlevideo.com/api/manifest/hls_playlist/expire/1774596683/ei/693Fabj0Boe_pskPho3I2As/ip/8.218.22.48/id/2d9b8b79901fe4ec/itag/96/source/youtube/requiressl/yes/ratebypass/yes/pfa/1/sgoap/clen%3D7329103%3Bdur%3D452.812%3Bgir%3Dyes%3Bitag%3D140%3Blmt%3D1765972446341550/sgovp/clen%3D229103384%3Bdur%3D452.752%3Bgir%3Dyes%3Bitag%3D137%3Blmt%3D1765972333779041/rqh/1/hls_chunk_host/rr5---sn-i3belnl7.googlevideo.com/xpc/EgVo2aDSNQ%3D%3D/cps/210/met/1774575083,/mh/xd/mm/31,29/mn/sn-i3belnl7,sn-i3b7knsl/ms/au,rdu/mv/m/mvi/5/pl/17/rms/au,au/initcwndbps/401250/siu/1/bui/AUUZDGKiVhrMylhCvf2cEK-3a2rOrloJ-k5EcgqFjc4AcrWaB8WArftoy1HR-_cElkdlWxqXPQ/spc/jlWavf-WvXhuZWOE0iYn3xC9fHW8qlP4398N5XYPSpX8uQA_jOkK6U9skmFppc_s_GEugGbAcw/vprv/1/ns/E2O_2Yp4l2W9fUrAgbJQ6bsT/playlist_type/CLEAN/dover/11/txp/5309224/mt/1774574722/fvip/4/keepalive/yes/fexp/51565115,51565681,51791334/n/oLUHK5T9Ubkxxw/sparams/expire,ei,ip,id,itag,source,requiressl,ratebypass,pfa,sgoap,sgovp,rqh,xpc,siu,bui,spc,vprv,ns,playlist_type/sig/AHEqNM4wRQIgUgv3bn6O2lXi9fJilHEH74rHdNJm3VfNPSD01Mj2yqsCIQCNAZTMLlRrIFsHFCm1D3peQvkOSE4qHNDYXiFMfYZ5nQ%3D%3D/lsparams/hls_chunk_host,cps,met,mh,mm,mn,ms,mv,mvi,pl,rms,initcwndbps/lsig/APaTxxMwRQIhAKzlM7IaW7vJv8-hupR8lnrnyjdZlSpM4MSbFzOYc1-RAiB16x6waoCVHCKSBZwIXodDni_P-HBtjMSF_MNoCW8ung%3D%3D/playlist/index.m3u8",
+      "title": "Alan Walker - Faded (Dj遗恋 vs Dj小厌 Electro Remix 2025)"
+    },
+    {
+      "id": "cmn887dkr0003pli75rn07a68",
+      "url": "https://manifest.googlevideo.com/api/manifest/hls_playlist/expire/1774596712/ei/B97Fade2Mq7i2roPv4GV6Q4/ip/8.210.36.159/id/bf927034ce9a1f48/itag/96/source/youtube/requiressl/yes/ratebypass/yes/pfa/1/sgoap/clen%3D5358101%3Bdur%3D331.023%3Bgir%3Dyes%3Bitag%3D140%3Blmt%3D1759534494344292/sgovp/clen%3D169972019%3Bdur%3D330.963%3Bgir%3Dyes%3Bitag%3D137%3Blmt%3D1759537143077459/rqh/1/hls_chunk_host/rr4---sn-oji3bc-5j.googlevideo.com/xpc/EgVo2aDSNQ%3D%3D/cps/436/met/1774575111,/mh/Hp/mm/31,26/mn/sn-oji3bc-5j,sn-un57enez/ms/au,onr/mv/m/mvi/4/pl/17/rms/au,au/initcwndbps/551250/siu/1/bui/AUUZDGJViP3M7R3mjCQ91Ok2Fp1R4GPAydgloj59QxCmu294AoHctoN4KP7mFeGzr9DWT8dSNA/spc/jlWavXz_UwNivWtj92zGe_xbvbUcfmKLrzlinzowC_w8qAoy-RQabYwCRcALPfhcf91FfHpicA/vprv/1/ns/AVy7w7zx9Qd2Zd6whePyXtET/playlist_type/CLEAN/dover/11/txp/5535534/mt/1774574722/fvip/1/keepalive/yes/fexp/51565115,51565681,51791334/n/6Qql9sYlWdncSQ/sparams/expire,ei,ip,id,itag,source,requiressl,ratebypass,pfa,sgoap,sgovp,rqh,xpc,siu,bui,spc,vprv,ns,playlist_type/sig/AHEqNM4wRAIgZ8glYdTE5LpXamMcvEEfL8WKD2UXr8PKX2O6jYbZQLMCIBvDnNWzoTc5fiQpPdQjo4zXozeAUhwPLqtWKSlHHrp4/lsparams/hls_chunk_host,cps,met,mh,mm,mn,ms,mv,mvi,pl,rms,initcwndbps/lsig/APaTxxMwRQIgXNtlQOdX48ngfXlgNnO2PRQqo_trjnEwcZ_9i8UgTYYCIQCQ7Crvcdv64DaLE1g0cT6v2Eie4fYHGPQ6-jaKPDaPFw%3D%3D/playlist/index.m3u8",
+      "title": "燕宝儿 - 见不到忘不了 (Dj小罗 ProgHouse Remix 2025) Không Gặp Được Nhưng Không Thể Quên - Yến Bảo Nhi #抖音"
+    },
+    {
+      "id": "cmn8884aq0004pli7lvweasve",
+      "url": "https://manifest.googlevideo.com/api/manifest/hls_playlist/expire/1774596746/ei/Kt7FaaTcI5aNvcAPktHH2As/ip/8.218.22.48/id/a99eddf1da713728/itag/96/source/youtube/requiressl/yes/ratebypass/yes/pfa/1/sgoap/clen%3D61089132%3Bdur%3D3774.635%3Bgir%3Dyes%3Bitag%3D140%3Blmt%3D1768844229956868/sgovp/clen%3D2079275993%3Bdur%3D3774.570%3Bgir%3Dyes%3Bitag%3D137%3Blmt%3D1768844166871028/rqh/1/hls_chunk_host/rr2---sn-i3b7knzs.googlevideo.com/xpc/EgVo2aDSNQ%3D%3D/cps/191/met/1774575146,/mh/Zc/mm/31,29/mn/sn-i3b7knzs,sn-oji3bc-5n/ms/au,rdu/mv/m/mvi/2/pl/17/rms/au,au/initcwndbps/401250/siu/1/bui/AUUZDGJK4C_cH5F1Mqs-6_VF8qC1SqLY95eL8CdV39izGxr-NzIxqUJJjA0W5QIoeAyimtYt9w/spc/jlWavbcJGkw3Bylj2if2F-4vZaeu4AZCh5AZiL7xjQHw61DYF4esQTa1IDP2AwKKMqtiuahkvw/vprv/1/ns/0WddbAUwroP0hUJfutmUnFAT/playlist_type/CLEAN/dover/11/txp/6309224/mt/1774574722/fvip/2/keepalive/yes/fexp/51565115,51565681,51791334/n/onmoqfkNFqWvRA/sparams/expire,ei,ip,id,itag,source,requiressl,ratebypass,pfa,sgoap,sgovp,rqh,xpc,siu,bui,spc,vprv,ns,playlist_type/sig/AHEqNM4wRQIhAOqjx5-yfiPQU0jayI21EhgPR1AmbpqLJQkBLp2N3pnkAiBy1hNs0CeEHmWSVSyM8aFfNz2rFalw-AXmUYGro3nrZw%3D%3D/lsparams/hls_chunk_host,cps,met,mh,mm,mn,ms,mv,mvi,pl,rms,initcwndbps/lsig/APaTxxMwRQIgB0fQmmo6H83QcRvp8GptuFQLqewTLJoBKQNntvf-7ngCIQD-59mFbFO0ZaadXzS--sSSwG1nO31cvOkyr5rLwzRKuw%3D%3D/playlist/index.m3u8",
+      "title": "1 Hour | G.E.M.邓紫棋 - 唯一 (Dj浪仔 FunkyHouse Remix) Duy Nhất /  Only One - Đặng Tử Kỳ G.E.M #dj抖音版2026"
     }
   ],
-  "rtmpUrl": "rtmp://a.rtmp.youtube.com/live/hdb0-bxcg-ua45-hg30-78r0",
+  "rtmpUrl": "rtmp://sendhw3.douyu.com/live/12816797rO4ICze5?dyPRI=0&noforward=1&origin=hw&record=flv&roirecognition=0&stemp_id=12898962&tw=0&wm=0&wsSecret=518befd57c890ae736ea22e500716aea&wsSeek=off&wsTime=69c5df1c",
   "loopCount": 10,
   "error": null,
-  "startedAt": "2026-03-26T03:31:11.368Z",
-  "currentPid": null,
-  "sessionId": "mn6vxkp3albwphdl0"
+  "startedAt": "2026-03-27T01:39:08.612Z",
+  "currentPid": 7572,
+  "sessionId": "mn88bxpf9b04mzo45"
 }
